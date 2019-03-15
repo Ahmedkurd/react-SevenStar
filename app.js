@@ -4,9 +4,7 @@ const path=require('path');
 var app=express();
 const port =5000;
 const bodyparser=require('body-parser');
-var webpack = require('webpack');
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var config = require('./webpack.config');
+
 //   // "babel-preset-env": "^1.7.0", 
  // "babel-core": "^6.26.3",
 app.use(express.json()); 
@@ -24,13 +22,7 @@ app.get('/', (req, res) => {
 
 
 
-//webpack
 
-var compiler = webpack(config);
-app.use(webpackDevMiddleware(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath
-}));
 
 
 app.listen(port, () => {
