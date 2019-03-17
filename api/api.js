@@ -46,17 +46,7 @@ router.post('/addsubject', (req, res) => {
      
 });
 
-// router.post('/addsubject/upload',cors(),function(req,res){
-  
-//   upload(req,res,function(err) {
-//     console.log('start uploading ... ');
-//       if(err) {
-//           return res.end(err);
-//       }
-//       res.end("File is uploaded");
-      
-//   });
-// });
+
 router.post('/addsubject/upload', upload.single('Image'), function (req, res) {
    console.log("File is Upload");
 });
