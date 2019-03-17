@@ -33,10 +33,9 @@ class AddSubject extends React.Component {
   }
   onFormSubmit(e){
     e.preventDefault() // Stop form submit
-    axios.get('/addsub')
-    .then(response => this.state)
-    };
-  
+    axios.post('http://localhost:5000/api/addsubject', this.state)
+    .then(res => console.log(res.data));
+  }
     render() {
       return (
     <form className="forms-sample" autoComplete="off"  onSubmit={this.onFormSubmit}>

@@ -4,14 +4,13 @@ const path=require('path');
 var app=express();
 const port =5000;
 const bodyparser=require('body-parser');
-const mongoose = require('mongoose');
 
+ const api=require('./api/api');
 //Database 
 
 
-mongoose.Promise=global.Promise;
- const db=require('./config/db');
-
+// require('./config/db');
+// const Subject=require('./models/Subejct');
     
 
 //   // "babel-preset-env": "^1.7.0", 
@@ -20,7 +19,7 @@ app.use(express.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use(express.static(path.join(__dirname,'public')));
-
+app.use('/api',api); 
  
 // Register `hbs.engine` with the Express app ...
 app.engine('hbs', exphbs({defaultLayout: 'main',extname:'hbs'}));
@@ -28,11 +27,6 @@ app.set('view engine', 'hbs');
 app.get('/', (req, res) => {
     res.render('index');
 });
-
-
-
-
-
 
 app.listen(port, () => {
     console.log(`Server started on port`);
