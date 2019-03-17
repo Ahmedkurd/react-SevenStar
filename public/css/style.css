@@ -16302,3 +16302,13 @@ ul {
     border-left: 3px solid rgba(255, 255, 255, 0.2); } }
 
 /*# sourceMappingURL=maps/style.css.map */
+input#file {
+  display: inline-block !important;
+ 
+  padding: 120px 0 0 0 !important;
+ 
+  overflow: hidden !important;
+  -webkit-box-sizing: border-box !important;
+  -moz-box-sizing: border-box !important;
+  box-sizing: border-box !important;
+}

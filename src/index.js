@@ -4,6 +4,6 @@ import AddSubject from "./components/AddSubject";
 
 
 ReactDOM.render(
-    <AddSubject name="Ahmed" />,
+    <AddSubject/>,
     document.getElementById('app')
   );

@@ -4,6 +4,15 @@ const path=require('path');
 var app=express();
 const port =5000;
 const bodyparser=require('body-parser');
+const mongoose = require('mongoose');
+
+//Database 
+
+
+mongoose.Promise=global.Promise;
+ const db=require('./config/db');
+
+    
 
 //   // "babel-preset-env": "^1.7.0", 
  // "babel-core": "^6.26.3",

@@ -1,28 +1,65 @@
 import React from "react";
+import axios, { post } from 'axios';
 
 class AddSubject extends React.Component {
+  constructor(props)
+  {
+    super(props);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onChangeValue = this.onChangeValue.bind(this);
+    
+    // this.state={
+    //   title:"",
+    //   Description:"",
+    //   pic:"",
+    //   userid:"",
+    //   date:""
+    // }
+
+  }
+
+  onChangeValue(e)
+  {
+    const target = e.target;
+
+    this.setState({
+      [target.name]: e.target.value,
+      [target.name]: e.target.value,
+      [target.name]: e.target.value,
+     
+
+    });
+   
+  }
+  onFormSubmit(e){
+    e.preventDefault() // Stop form submit
+    axios.get('/addsub')
+    .then(response => this.state)
+    };
+  
     render() {
       return (
-    <form className="forms-sample" autoComplete="off">
+    <form className="forms-sample" autoComplete="off"  onSubmit={this.onFormSubmit}>
                 <div className="form-group row">
                     <label for="title" className="col-sm-3 col-form-label">Title</label>
                     <div class="col-sm-8">
-                    <input type="email" className="form-control" name="title" placeholder="Enter title"/>
+                    <input type="text" className="form-control" name="title"  placeholder="Enter title" onChange={this.onChangeValue} />
                     </div>
                 </div>
                 <div className="form-group row">
                     <label for="Description" className="col-sm-3 col-form-label">Description</label>
                     <div class="col-sm-8">
-                    <input type="text" className="form-control" name="Description" placeholder="Enter title"/>
+                    <input type="text" className="form-control" name="Description" placeholder="Enter title" onChange={this.onChangeValue}/>
                     </div>
                 </div>
                 <div class="form-group row">
                       <label className="col-sm-3 col-form-label">Image upload</label>
                       <div class="col-xs-8">
-                         <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image"/>
+                         
                       </div>
                       <div class="col-xs-2">
-                      <button class="file-upload-browse btn btn-info" type="file">Upload</button>
+                      <input type="file" class="btn btn-outline-info btn-fw" name="pic" accept="image/*"  onChange={this.onChangeValue}/>
+                      {/* <input class="file-upload-browse btn btn-info" type="file"  text="Upload" /> */}
                       </div>
                  </div>
                 <button type="submit" className="btn btn-success mr-2">Send</button>
@@ -31,4 +68,5 @@ class AddSubject extends React.Component {
       );
     }
   };
+
 export default AddSubject;
