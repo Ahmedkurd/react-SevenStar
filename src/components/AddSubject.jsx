@@ -7,7 +7,7 @@ class AddSubject extends React.Component {
     super(props);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChangeValue = this.onChangeValue.bind(this);
-    
+    this.fileUpload = this.fileUpload.bind(this)
     // this.state={
     //   title:"",
     //   Description:"",
@@ -31,10 +31,32 @@ class AddSubject extends React.Component {
     });
    
   }
+  fileUpload(file){
+ 
+    //let filee =this.state.file;
+    const url = 'http://localhost:5000/api/addsubject/upload';
+    const formData = new FormData();
+    formData.append('image',file);
+    formData.append('name','test');
+    const config = {
+        headers: {
+            // 'content-type': 'multipart/form-data'
+        },
+        data:formData
+    }
+    return  post(url, formData,config)
+  }
   onFormSubmit(e){
-    e.preventDefault() // Stop form submit
+   
+    e.preventDefault(); // Stop form submit
     axios.post('http://localhost:5000/api/addsubject', this.state)
-    .then(res => console.log(res.data));
+    .then(res => {
+      console.log('ok');
+     
+    });
+    debugger;
+    this.fileUpload(this.state.file).then((response)=>{
+      console.log(response.data)});  
   }
     render() {
       return (

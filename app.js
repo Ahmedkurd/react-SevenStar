@@ -4,10 +4,14 @@ const path=require('path');
 var app=express();
 const port =5000;
 const bodyparser=require('body-parser');
+const api=require('./api/api');
+const Upload=require("express-fileupload");
+var multer  = require('multer');
 
- const api=require('./api/api');
-//Database 
-
+//upload 
+app.use(fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 },
+  }));
 
 // require('./config/db');
 // const Subject=require('./models/Subejct');
