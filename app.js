@@ -9,9 +9,7 @@ const Upload=require("express-fileupload");
 var multer  = require('multer');
 
 //upload 
-app.use(fileUpload({
-    limits: { fileSize: 50 * 1024 * 1024 },
-  }));
+
 
 // require('./config/db');
 // const Subject=require('./models/Subejct');

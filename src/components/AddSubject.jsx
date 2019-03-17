@@ -7,7 +7,7 @@ class AddSubject extends React.Component {
     super(props);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChangeValue = this.onChangeValue.bind(this);
-    this.fileUpload = this.fileUpload.bind(this)
+    this.uploadChange = this.uploadChange.bind(this);
     // this.state={
     //   title:"",
     //   Description:"",
@@ -25,26 +25,17 @@ class AddSubject extends React.Component {
     this.setState({
       [target.name]: e.target.value,
       [target.name]: e.target.value,
-      [target.name]: e.target.value,
      
-
     });
    
   }
-  fileUpload(file){
- 
-    //let filee =this.state.file;
-    const url = 'http://localhost:5000/api/addsubject/upload';
-    const formData = new FormData();
-    formData.append('image',file);
-    formData.append('name','test');
-    const config = {
-        headers: {
-            // 'content-type': 'multipart/form-data'
-        },
-        data:formData
-    }
-    return  post(url, formData,config)
+  uploadChange(e)
+  {
+    const target = e.target;
+    this.setState({ 
+      [target.name]:e.target.value,
+      'file': e.target.files[0]});
+      console.log(e.target.files[0]);
   }
   onFormSubmit(e){
    
@@ -54,9 +45,24 @@ class AddSubject extends React.Component {
       console.log('ok');
      
     });
-    debugger;
-    this.fileUpload(this.state.file).then((response)=>{
-      console.log(response.data)});  
+    const formData = new FormData();
+    formData.append(
+      'Image',
+      this.state.file,
+      this.state.file.name
+    )
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+            
+        }
+    };
+    axios.post("http://localhost:5000/api/addsubject/upload",formData,config)
+        .then((response) => {
+            console.log(response);
+        }).catch((error) => {
+    });
+    
   }
     render() {
       return (
@@ -79,7 +85,7 @@ class AddSubject extends React.Component {
                          
                       </div>
                       <div class="col-xs-2">
-                      <input type="file" class="btn btn-outline-info btn-fw" name="pic" accept="image/*"  onChange={this.onChangeValue}/>
+                      <input type="file" class="btn btn-outline-info btn-fw" name="pic" accept="image/*"  onChange={this.uploadChange}/>
                       {/* <input class="file-upload-browse btn btn-info" type="file"  text="Upload" /> */}
                       </div>
                  </div>
