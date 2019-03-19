@@ -1,6 +1,8 @@
 import React from "react";
 import axios, { post } from 'axios';
 
+
+
 class AddSubject extends React.Component {
   constructor(props)
   {
@@ -35,7 +37,7 @@ class AddSubject extends React.Component {
     this.setState({ 
       [target.name]:e.target.value,
       'file': e.target.files[0]});
-      console.log(e.target.files[0]);
+      
   }
   onFormSubmit(e){
    
@@ -57,16 +59,26 @@ class AddSubject extends React.Component {
             
         }
     };
+
     axios.post("http://localhost:5000/api/addsubject/upload",formData,config)
         .then((response) => {
-            console.log(response);
+            console(response);
         }).catch((error) => {
     });
-    
+    alert('Subject Added');
+    document.getElementById("frmaddSubject").reset();
+    this.setState({
+      "title": "",
+      "Description": "",
+      "pic":"",
+      "file":""
+    });
+
   }
+  
     render() {
       return (
-    <form className="forms-sample" autoComplete="off"  onSubmit={this.onFormSubmit}>
+    <form id="frmaddSubject" className="forms-sample" autoComplete="off"  onSubmit={this.onFormSubmit}>
                 <div className="form-group row">
                     <label for="title" className="col-sm-3 col-form-label">Title</label>
                     <div class="col-sm-8">
