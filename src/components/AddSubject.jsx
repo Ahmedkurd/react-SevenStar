@@ -1,5 +1,7 @@
 import React from "react";
 import axios, { post } from 'axios';
+import { Alert ,Progress } from 'reactstrap';
+import AlertMe from './AlertA';
 
 
 
@@ -10,6 +12,13 @@ class AddSubject extends React.Component {
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChangeValue = this.onChangeValue.bind(this);
     this.uploadChange = this.uploadChange.bind(this);
+ 
+    this.state = {
+      visible: false,
+      progressV:0
+    };
+    this.onDismiss = this.onDismiss.bind(this);
+
     // this.state={
     //   title:"",
     //   Description:"",
@@ -57,28 +66,49 @@ class AddSubject extends React.Component {
         headers: {
             'content-type': 'multipart/form-data'
             
-        }
+        },
+        onUploadProgress: progressEvent =>this.setState({progressV:progressEvent})
     };
 
-    axios.post("http://localhost:5000/api/addsubject/upload",formData,config)
+    
+   
+    axios.post("http://localhost:5000/api/addsubject/upload",formData, { progress: (progressEvent) => {
+      if (progressEvent.lengthComputable) {
+         console.log(progressEvent.loaded + ' ' + progressEvent.total);
+         this.setState({progressV:progressEvent});
+      
+      } 
+     }
+    })
         .then((response) => {
             console(response);
         }).catch((error) => {
     });
-    alert('Subject Added');
+  
+   
+    
     document.getElementById("frmaddSubject").reset();
     this.setState({
       "title": "",
       "Description": "",
       "pic":"",
-      "file":""
+      "file":"",
+      "progressV":0
     });
-
-  }
+    this.setState({visible:true});
   
+  }
+  onDismiss()
+  {
+    this.setState({ visible: false });
+  }
     render() {
       return (
+       
     <form id="frmaddSubject" className="forms-sample" autoComplete="off"  onSubmit={this.onFormSubmit}>
+     <Alert color="success" isOpen={this.state.visible} toggle={this.onDismiss}>
+           Subject Added
+       </Alert>
                 <div className="form-group row">
                     <label for="title" className="col-sm-3 col-form-label">Title</label>
                     <div class="col-sm-8">
@@ -103,6 +133,9 @@ class AddSubject extends React.Component {
                  </div>
                 <button type="submit" className="btn btn-success mr-2">Send</button>
                 <button className="btn btn-light">Cancel</button>
+                <br/>
+                <Progress animated color="info" value={this.state.progressV} />
+
             </form>
       );
     }

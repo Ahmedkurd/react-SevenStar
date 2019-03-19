@@ -29,6 +29,9 @@ app.set('view engine', 'hbs');
 app.get('/', (req, res) => {
     res.render('index');
 });
+app.get('/subject', (req, res) => {
+    res.render('subject');
+});
 
 app.listen(port, () => {
     console.log(`Server started on port`);

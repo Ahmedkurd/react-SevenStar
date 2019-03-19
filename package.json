@@ -28,6 +28,7 @@
     "react-alert": "^5.2.0",
     "react-alert-template-basic": "^1.0.0",
     "react-dom": "^16.8.4",
+    "reactstrap": "^7.1.0",
     "save": "^2.3.3"
   },
   "devDependencies": {
