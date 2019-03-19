@@ -133,7 +133,7 @@ class AddSubject extends React.Component {
                  </div>
                 <button type="submit" className="btn btn-success mr-2">Send</button>
                 <button className="btn btn-light">Cancel</button>
-                <br/>
+                <br/>   <br/>
                 <Progress animated color="info" value={this.state.progressV} />
 
             </form>

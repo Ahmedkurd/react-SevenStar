@@ -1,13 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import AddSubject from "./components/AddSubject";
-import contentSubject from './components/contentSubject';
+import Contentsub from "./components/contentsub";
 
-ReactDOM.render(
-    <AddSubject/>,
-    document.getElementById('app')
-  );
-ReactDOM.render(
-  <contentSubject/>,
-  document.getElementById('content')
-);
+ReactDOM.render( <AddSubject/>,document.getElementById('app'));
+
