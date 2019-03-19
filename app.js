@@ -20,7 +20,8 @@ var multer  = require('multer');
 app.use(express.json()); 
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
-app.use(express.static(path.join(__dirname,'public')));
+
+app.use(express.static(path.join(__dirname,'/public')));
 app.use('/api',api); 
  
 // Register `hbs.engine` with the Express app ...

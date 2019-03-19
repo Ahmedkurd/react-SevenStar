@@ -51,17 +51,18 @@ class AddSubject extends React.Component {
   onFormSubmit(e){
    
     e.preventDefault(); // Stop form submit
-    axios.post('http://localhost:5000/api/addsubject', this.state)
-    .then(res => {
-      console.log('ok');
+    // axios.post('http://localhost:5000/api/addsubject', this.state)
+    // .then(res => {
+    //   console.log('ok');
      
-    });
+    // });
     const formData = new FormData();
     formData.append(
       'Image',
       this.state.file,
       this.state.file.name
-    )
+    );
+    formData.append('Data',JSON.stringify(this.state));
     const config = {
         headers: {
             'content-type': 'multipart/form-data'
