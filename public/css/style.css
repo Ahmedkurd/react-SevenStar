@@ -16312,3 +16312,117 @@ input#file {
   -moz-box-sizing: border-box !important;
   box-sizing: border-box !important;
 }
+.box
+{
+  width:90%;
+  margin-bottom: 1%;
+  margin-left:auto;
+  margin-right: auto;
+  background-color: white;
+  border-radius: 10px 10px 10px 10px;
+  
+}
+.thumbnail
+{
+  width:90%;
+  
+  margin-left:auto;
+  margin-right: auto;
+
+
+
+}
+.thumbnail img
+{
+  margin-top: 5%;
+  margin-left:auto !important;
+  margin-right: auto !important;
+  border-radius: 20px 20px 20px 20px;
+  margin-bottom: 1%;
+}
+.rate {
+  margin-left: auto;
+  margin-right: auto;
+  height: 46px;
+  padding: 0 10px;
+  width: 100%;
+  margin-bottom: 1%;
+}
+.rate:not(:checked) > input {
+  position:absolute;
+  top:-9999px;
+}
+.rate:not(:checked) > label {
+  float:right;
+  width:1em;
+  overflow:hidden;
+  white-space:nowrap;
+  cursor:pointer;
+  font-size:30px;
+  color:#ccc;
+}
+.rate:not(:checked) > label:before {
+  content: '★ ';
+}
+.rate > input:checked ~ label {
+  color: #ffc700;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+  color: #deb217;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+  color: #c59b08;
+}
+
+/* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
+.rate-base-layer
+        {
+            color: #aaa;
+        }
+        .rate-hover-layer
+        {
+            color: orange;
+        }
+        .rate2
+        {
+            font-size: 35px;
+        }
+        .rate2 .rate-hover-layer
+        {
+            color: pink;
+        }
+        .rate2 .rate-select-layer
+        {
+            color: red;
+        }
+        .im
+        {
+            background-image: url('./images/heart.gif');
+            background-size: 32px 32px;
+            background-repeat: no-repeat;
+            width: 32px;
+            height: 32px;
+            display: inline-block;
+        }
+        .im2
+        {
+            background-image: url('./images/emoji5.png');
+            background-size: 64px 64px;
+            background-repeat: no-repeat;
+            width: 64px;
+            height: 64px;
+            display: inline-block;
+        }
+        #rate5 .rate-base-layer span, #rate7 .rate-base-layer span
+        {
+            opacity: 0.5 !;
+        }
+        #ratei
+        {
+          width:100%;
+        }

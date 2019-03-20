@@ -11,7 +11,9 @@ const cors = require('cors');
 
 require('../config/db');
 require('../models/Subejct');
+require('../models/rateSubject');
 const Subejct=mongoose.model('Subject');
+const rateSubject=mongoose.model('RateSubject');
 
 
 var storage = multer.diskStorage({
@@ -28,28 +30,11 @@ var upload = multer({ storage: storage })
 
 
 router.use(express.json()); 
-router.use(bodyparser.urlencoded({ extended: false }));
-router.use(bodyparser.json());
-
+// router.use(bodyparser.urlencoded({ extended: true }));
+// router.use(bodyparser.json());
 
 router.post('/addsubject', (req, res) => {
    
-  // console.log(req.body);
-  //   const newSub=new Subejct(
-  //       {
-  //         title:req.body.title,
-  //         description:req.body.Description,
-  //         pic:'',
-  //         userId:1,
-  //         rate:0
-  //       });
-  //       newSub.save(function (err, book) {
-  //           if (err) return console.error(err);
-  //           console.log("add New Subject into Database ");
-            
-  //         });
-         
-     
 });
 
 
@@ -74,10 +59,31 @@ router.post('/addsubject/upload', upload.single('Image'), function (req, res) {
 });
 
 router.get('/getsubject', upload.single('Image'), function (req, res) {
-  Subejct.find({}, 'title description pic date rate userId', function (err, docs) {
+  Subejct.find({}, '_id title description pic date rate userId', function (err, docs) {
      res.send(JSON.stringify(docs));
      
   });
 });
 
+router.post('/addrate', function (req, res) {
+  
+  
+  console.log(req.body);
+   const RateSub=new rateSubject
+   ({
+     Rate:req.body.rate,
+     UserId:req.body.userid,
+     IdSubject:req.body.idsubject
+   })
+   RateSub.save(function (err, book) {
+    if (err) return console.error(err);
+    console.log("add New Subject into Database ");
+    res.send({data:'ok'});
+    
+  });
+});
+router.post('/rate', (req, res) => {
+   res.send(req.body);
+   console.log(req.body); 
+});
 module.exports=router;
