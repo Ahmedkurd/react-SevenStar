@@ -19,7 +19,7 @@ var multer  = require('multer');
  // "babel-core": "^6.26.3",
 app.use(express.json()); 
 
-app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
 app.use(express.static(path.join(__dirname,'/public')));

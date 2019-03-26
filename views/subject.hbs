@@ -1,19 +1,14 @@
 
 <script  type="text/javascript">
   $( document ).ready(function() {
-         
+        $("#ratetemp").val(0);
          getdata();
         
    });
  
     function getdata()
     {
-        var options = {
-                max_value: 7,
-                step_size: 1,
-                update_input_field_name: $("#asd"),
-              
-            }
+       
         $.ajax({
                     type: "GET",
                     contentType: "application/json; charset=utf-8",
@@ -27,7 +22,9 @@
                         " <img src="+value.pic+" style='height:230px; width:99%;' />"+
                         "<div class='caption'>"+" <h3>"+value.title+"</h3>"+
                         "<p>"+value.description+"</p> "+
-                        "<div class='rate'  data-rate-value="+value.rate+" onclick='SendRate(\""+value._id+"\","+value.rate+")' ></div>");
+                        "<div class='rate'  data-rate-value="+value.rate+" ></br>"+
+                        "</div><input value='Rate' class='btn btn-primary' type='button' onclick='SendRatee(\""+value._id+"\")'/>&nbsp;"+
+                        "<input value='Delete' class='btn btn-danger' type='button' onclick='Delete(\""+value._id+"\")'/>");
                         });
                          $(".rate").rate(options);
                     },
@@ -35,24 +32,44 @@
                         alert("Error");
                     }
                 });
+                 var options = {
+                max_value: 7,
+                step_size: 1,
+                update_input_field_name: $("#ratetemp"),
+              
+            }
              
     }
-    function SendRate(id,rate)
+   
+    function SendRatee(id,rate)
     {
-        var userId=1;
+        var form_data= {
+                       "rate":$("#ratetemp").val(),
+                       "userid":1,
+                       "idsubject":id
+                       };
+        console.log(form_data);
+      var userId=1;
         $.ajax({
                     type: "POST",
                     contentType: "application/json; charset=utf-8",
                     url: "/api/AddRate",
-                    data: {Id:id,userId:userId,rate:rate},
                     dataType: "json",
+                    data: JSON.stringify(form_data),
                     success: function (data) {
                         alert('Save Rating');
                     }
         })
     } 
-   
+    function Delete(id)
+    {
+        alert(id);
+    }
 </script>
 <div class="row" id="subcon">
- <input type="hidden" id="asd">
+  {{!-- dataType: "json", --}}
+                    {{!-- "idsubject":'1',
+                        "userid":'2',
+                        "rate":'3' --}}
+ <input type="hidden" id="ratetemp">
 </div>

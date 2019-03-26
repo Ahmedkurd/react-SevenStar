@@ -67,19 +67,23 @@ router.get('/getsubject', upload.single('Image'), function (req, res) {
 
 router.post('/addrate', function (req, res) {
   
-  
-  console.log(req.body);
+  var idd=req.body.idsubject;
+  var ratee=req.body.rate;
+  console.log(idd+" "+ratee);
    const RateSub=new rateSubject
    ({
      Rate:req.body.rate,
      UserId:req.body.userid,
      IdSubject:req.body.idsubject
-   })
+   });
    RateSub.save(function (err, book) {
     if (err) return console.error(err);
     console.log("add New Subject into Database ");
-    res.send({data:'ok'});
-    
+   
+    Subejct.updateOne({_id:idd},{ $set: { rate: ratee } },function(){
+      console.log('update is save'+' '+idd);
+      res.send({data:'ok'});
+    });
   });
 });
 router.post('/rate', (req, res) => {
