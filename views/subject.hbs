@@ -57,13 +57,32 @@
                     dataType: "json",
                     data: JSON.stringify(form_data),
                     success: function (data) {
+                        if(data.data=="ok")
                         alert('Save Rating');
+                        else
+                        alert('Not complete');
                     }
         })
     } 
     function Delete(id)
-    {
-        alert(id);
+    {   
+        var form_data= {
+            "_id":id
+            };
+            console.log(form_data);
+        $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: "/api/deletesub",
+        dataType: "json",
+        data: JSON.stringify(form_data),
+        success: function (data) {
+            if(data.data=="ok")
+            alert('subject is delete');
+            else
+            alert('Not complete');
+            }
+        })
     }
 </script>
 <div class="row" id="subcon">

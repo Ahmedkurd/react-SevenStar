@@ -1,13 +1,9 @@
 const  express = require('express');
 const  router = express.Router();
-const bodyparser=require('body-parser');
 const mongoose = require('mongoose');
 const multer  = require('multer');
-var fs = require('fs');
-const path=require("path");
+var fs = require("fs");
 
-//upload 
-const cors = require('cors');
 
 require('../config/db');
 require('../models/Subejct');
@@ -33,12 +29,12 @@ router.use(express.json());
 // router.use(bodyparser.urlencoded({ extended: true }));
 // router.use(bodyparser.json());
 
-router.post('/addsubject', (req, res) => {
+router.post('/addsubject', () => {
    
 });
 
 
-router.post('/addsubject/upload', upload.single('Image'), function (req, res) {
+router.post('/addsubject/upload', upload.single('Image'), function (req) {
   
   var data=JSON.parse(req.body.Data);
   
@@ -50,7 +46,7 @@ router.post('/addsubject/upload', upload.single('Image'), function (req, res) {
       userId:1,
       rate:0
     });
-    newSub.save(function (err, book) {
+    newSub.save(function (err) {
         if (err) return console.error(err);
         console.log("add New Subject into Database ");
         
@@ -65,26 +61,73 @@ router.get('/getsubject', upload.single('Image'), function (req, res) {
   });
 });
 
-router.post('/addrate', function (req, res) {
+router.post('/addrate', function (req,res) {
   
+  var useridd=req.body.userid;
   var idd=req.body.idsubject;
   var ratee=req.body.rate;
   console.log(idd+" "+ratee);
-   const RateSub=new rateSubject
-   ({
-     Rate:req.body.rate,
-     UserId:req.body.userid,
-     IdSubject:req.body.idsubject
-   });
-   RateSub.save(function (err, book) {
-    if (err) return console.error(err);
-    console.log("add New Subject into Database ");
+ 
+   rateSubject.count({UserId:useridd,IdSubject:idd},function(err,data){
+    console.log("count data : "+data);
+    if(data>0)
+   {
    
-    Subejct.updateOne({_id:idd},{ $set: { rate: ratee } },function(){
-      console.log('update is save'+' '+idd);
-      res.send({data:'ok'});
+    rateSubject.updateOne({userId:useridd,IdSubject:idd},{ $set: { rate: ratee } },function(){
+      console.log('Update Rank Subject'+' '+idd);
+      
     });
+      Subejct.updateOne({_id:idd},{ $set: { rate: ratee } },function(){
+        console.log('Update Subject'+' '+idd);
+        
+      });
+      res.send({data:'ok'});
+   }else
+   {
+    const newRate=new rateSubject(
+      {
+        Rate:req.body.rate,
+        UserId:req.body.userid,
+        IdSubject:req.body.idsubject
+      });
+      newRate.save(function (err) {
+      if (err) return console.error(err);
+      console.log("add New Rate into Subject ");
+   })
+   Subejct.updateOne({_id:idd},{ $set: { rate: ratee } },function(){
+    console.log('Update Subject'+' '+idd);
+    
   });
+  res.send({data:'ok'});
+  }
+  
+  
+});
+  
+router.post('/delete', (req, res) => {
+  console.log(req.body.id);
+  res.send({data:'ok'});
+});
+router.post('/delsubject', (req, res) => {
+  console.log(req.body.id);
+  // Subejct.findById(req.body.id, 'pic', function (err, adventure) 
+  // {
+  //   console.log(adventure);
+  //   fs.unlink(adventure, function()
+  //   {
+  //     console.log("Delete File "+adventure);
+  //   })
+  // });
+  
+  // Subejct.deleteOne({IdSubject:req.body.id},function(err,doc){
+  //   console.log('delete Subject');
+  // });
+  // rateSubject.deleteMany({_id:req.body.id},function(err,doc){
+  //   console.log('delete rate Subject');
+  // })
+  res.send({data:'ok'});
+});
+  
 });
 router.post('/rate', (req, res) => {
    res.send(req.body);
