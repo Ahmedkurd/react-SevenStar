@@ -102,35 +102,34 @@ router.post('/addrate', function (req,res) {
   }
   
   
+  }); 
 });
-  
 router.post('/delete', (req, res) => {
-  console.log(req.body.id);
-  res.send({data:'ok'});
-});
-router.post('/delsubject', (req, res) => {
-  console.log(req.body.id);
-  // Subejct.findById(req.body.id, 'pic', function (err, adventure) 
-  // {
-  //   console.log(adventure);
-  //   fs.unlink(adventure, function()
-  //   {
-  //     console.log("Delete File "+adventure);
-  //   })
-  // });
   
-  // Subejct.deleteOne({IdSubject:req.body.id},function(err,doc){
-  //   console.log('delete Subject');
-  // });
-  // rateSubject.deleteMany({_id:req.body.id},function(err,doc){
-  //   console.log('delete rate Subject');
-  // })
-  res.send({data:'ok'});
-});
+  Subejct.findById({_id:req.body.id}, 'pic', function (err, data) 
+  {
+    console.log(data.pic);
+    fs.unlink('public'+ data.pic, function()
+    {
+      console.log("Delete File "+data.pic);
+    })
+  })
+  rateSubject.deleteMany({IdSubject:req.body.id},function(err,doc){
+    console.log('delete rate Subject');
+  })
+
+  Subejct.deleteOne({_id:req.body.id},function(err,doc){
+    console.log('delete Subject');
+   
+    
+  })
+  res.json({data:'ok'});
   
 });
+
+
 router.post('/rate', (req, res) => {
    res.send(req.body);
    console.log(req.body); 
 });
-module.exports=router;
+module.exports=router;  

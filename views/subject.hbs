@@ -1,9 +1,26 @@
 
 <script  type="text/javascript">
+
   $( document ).ready(function() {
         $("#ratetemp").val(0);
          getdata();
-        
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+            }
    });
  
     function getdata()
@@ -24,7 +41,7 @@
                         "<p>"+value.description+"</p> "+
                         "<div class='rate'  data-rate-value="+value.rate+" ></br>"+
                         "</div><input value='Rate' class='btn btn-primary' type='button' onclick='SendRatee(\""+value._id+"\")'/>&nbsp;"+
-                        "<input value='Delete' class='btn btn-danger' type='button' onclick='Delete(\""+value._id+"\")'/>");
+                        "<input value='Delete' class='btn btn-danger' type='button' onclick='Delete(\""+value._id+"\")'/><br>");
                         });
                          $(".rate").rate(options);
                     },
@@ -48,7 +65,7 @@
                        "userid":1,
                        "idsubject":id
                        };
-        console.log(form_data);
+       
       var userId=1;
         $.ajax({
                     type: "POST",
@@ -58,31 +75,43 @@
                     data: JSON.stringify(form_data),
                     success: function (data) {
                         if(data.data=="ok")
-                        alert('Save Rating');
+                        toastr.info('Thank you for Rating')
                         else
-                        alert('Not complete');
+                         toastr.error('error')
                     }
         })
     } 
     function Delete(id)
     {   
         var form_data= {
-            "_id":id
+            "id":id
             };
             console.log(form_data);
         $.ajax({
-        type: "POST",
+        type: "post",
         contentType: "application/json; charset=utf-8",
-        url: "/api/deletesub",
+        url: "/api/delete",
         dataType: "json",
         data: JSON.stringify(form_data),
-        success: function (data) {
-            if(data.data=="ok")
-            alert('subject is delete');
-            else
-            alert('Not complete');
-            }
-        })
+        success: function (data) 
+        {
+                
+                if(data.data=="ok")
+                {   $("#subcon").empty();
+                    getdata();
+                    toastr.info('Delete Subject Successfulty')
+                   
+                }
+                else
+                {
+                    alert('Not complete');
+                }
+         }, error: function(xhr, ajaxOptions, thrownError)
+         {
+            alert(xhr.status);
+            console.log(thrownError);
+         }
+     })
     }
 </script>
 <div class="row" id="subcon">
