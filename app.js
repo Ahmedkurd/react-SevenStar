@@ -7,7 +7,10 @@ const bodyparser=require('body-parser');
 const api=require('./api/api');
 const Upload=require("express-fileupload");
 var multer  = require('multer');
-
+const flash=require('connect-flash');
+const cooki=require('cookie-parser');
+const session=require('express-session');
+const passport=require('passport');
 //upload 
 
 
@@ -24,10 +27,21 @@ app.use(bodyparser.json());
 
 app.use(express.static(path.join(__dirname,'/public')));
 app.use('/api',api); 
- 
+app.use(cooki());
+app.use(session({
+    secert:'secret123',
+    saveUninitialized:true,
+    resave:true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash);
 // Register `hbs.engine` with the Express app ...
 app.engine('hbs', exphbs({defaultLayout: 'main',extname:'hbs'}));
 app.set('view engine', 'hbs');
+app.get('/login', (req, res) => {
+    res.render('login',{layout: false});
+});
 app.get('/', (req, res) => {
     res.render('index');
 });
