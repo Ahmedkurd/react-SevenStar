@@ -27,15 +27,7 @@ app.use(bodyparser.json());
 
 app.use(express.static(path.join(__dirname,'/public')));
 app.use('/api',api); 
-app.use(cooki());
-app.use(session({
-    secert:'secret123',
-    saveUninitialized:true,
-    resave:true
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash);
+
 // Register `hbs.engine` with the Express app ...
 app.engine('hbs', exphbs({defaultLayout: 'main',extname:'hbs'}));
 app.set('view engine', 'hbs');
@@ -48,7 +40,15 @@ app.get('/', (req, res) => {
 app.get('/subject', (req, res) => {
     res.render('subject');
 });
-
+app.use(cooki());
+app.use(session({
+    secert:'secret123',
+    saveUninitialized:true,
+    resave:true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash);
 app.listen(port, () => {
     console.log(`Server started on port`);
 });
